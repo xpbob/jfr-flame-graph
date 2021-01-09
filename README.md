@@ -25,7 +25,7 @@ export FLAMEGRAPH_DIR=/path/to/FlameGraph
 ```
 
 
-#jfr-flame-graph usage
+# jfr-flame-graph usage
 ```
 usage: jfr-flame-graph
  -d,--decompress                                              Decompress
