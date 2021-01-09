@@ -1,7 +1,5 @@
 package com.xp.jfr.parser;
 
-import jdk.jfr.consumer.RecordedEvent;
-
 import static com.xp.Bootstrap.*;
 
 public enum EventType {
