@@ -10,7 +10,8 @@ public enum EventType {
     ALLOCATION_OUTSIDE_TLAB(OUT_TLAB, ValueField.ALLOCATION_SIZE, "jdk.ObjectAllocationOutsideTLAB"),
     JAVA_EXCEPTION(EXCEPTION, ValueField.COUNT, "jdk.JavaExceptionThrow", "jdk.JavaErrorThrow"),
     JAVA_MONITOR_BLOCKED(MONITOR, ValueField.DURATION, "jdk.JavaMonitorWait"),
-    IO(IO_SOCK, ValueField.DURATION, "jdk.FileRead", "jdk.FileWrite", "jdk.SocketRead", "jdk.SocketWrite");
+    IO(IO_SOCK, ValueField.DURATION, "jdk.FileRead", "jdk.FileWrite", "jdk.SocketRead", "jdk.SocketWrite"),
+    THREAD_DUMP(WALL, null, "jdk.ThreadDump");
 
     private String commandLineOption;
     private ValueField valueField;

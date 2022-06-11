@@ -17,12 +17,13 @@ import java.util.zip.GZIPInputStream;
 public class Bootstrap {
 
     public static final String CPU = "cpu";
+    public static final String ALLOC = "alloc";
     public static final String TLAB = "allocation-tlab";
     public static final String OUT_TLAB = "allocation-outside-tlab";
     public static final String EXCEPTION = "exceptions";
     public static final String MONITOR = "monitor-blocked";
     public static final String IO_SOCK = "io-socket";
-
+    public static final String WALL = "wall";
 
     public static Map<String, EventType> eventTypeMap = new HashMap<String, EventType>() {{
         put(CPU, EventType.METHOD_PROFILING_SAMPLE);
@@ -31,6 +32,7 @@ public class Bootstrap {
         put(EXCEPTION, EventType.JAVA_EXCEPTION);
         put(MONITOR, EventType.JAVA_MONITOR_BLOCKED);
         put(IO_SOCK, EventType.IO);
+        put(WALL, EventType.THREAD_DUMP);
     }};
 
     public static void main(String[] args) throws IOException {
@@ -44,7 +46,7 @@ public class Bootstrap {
         CommandLine commandLine;
         try {
             File file = null;
-            EventType eventType = null;
+            EventType[] eventTypes = null;
             commandLine = commandLineParser.parse(options, args);
             if (commandLine.hasOption("f")) {
                 file = new File(commandLine.getOptionValue("f"));
@@ -54,16 +56,23 @@ public class Bootstrap {
             }
             if (commandLine.hasOption("e")) {
                 String event = commandLine.getOptionValue("e");
-                eventType = eventTypeMap.get(event);
-                if (eventType == null) {
-                    throw new ParseException("event is \n" +
-                            "nonrecognition");
+                if (ALLOC.equals(event)) {
+                    eventTypes = new EventType[]{EventType.ALLOCATION_IN_NEW_TLAB, EventType.ALLOCATION_OUTSIDE_TLAB};
+                } else {
+                    EventType eventType = eventTypeMap.get(event);
+                    if (eventType == null) {
+                        throw new ParseException("event is \n" +
+                                "nonrecognition");
+                    }
+                    eventTypes = new EventType[]{eventType};
                 }
+
+
             } else {
-                eventType = EventType.JAVA_MONITOR_BLOCKED;
+                eventTypes = new EventType[]{EventType.METHOD_PROFILING_SAMPLE};
             }
             JfrParser jfrParser = new JfrParser(new FoldedDataModel());
-            String parser = jfrParser.parser(file.toPath(), eventType);
+            String parser = jfrParser.parser(file.toPath(), eventTypes);
             System.out.println(parser);
 
         } catch (ParseException e) {
