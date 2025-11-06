@@ -16,6 +16,7 @@ jdk11+
 - io-socket
 - alloc
 - wall
+- cpu-time
 
 # Clone FlameGraph repository
 

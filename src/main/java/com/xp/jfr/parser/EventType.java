@@ -11,7 +11,8 @@ public enum EventType {
     JAVA_EXCEPTION(EXCEPTION, ValueField.COUNT, "jdk.JavaExceptionThrow", "jdk.JavaErrorThrow"),
     JAVA_MONITOR_BLOCKED(MONITOR, ValueField.DURATION, "jdk.JavaMonitorWait"),
     IO(IO_SOCK, ValueField.DURATION, "jdk.FileRead", "jdk.FileWrite", "jdk.SocketRead", "jdk.SocketWrite"),
-    THREAD_DUMP(WALL, null, "jdk.ThreadDump");
+    THREAD_DUMP(WALL, null, "jdk.ThreadDump"),
+    CPU_TIME_SAMPLE(CPU_TIME, ValueField.COUNT, "jdk.CPUTimeSample");
 
     private String commandLineOption;
     private ValueField valueField;

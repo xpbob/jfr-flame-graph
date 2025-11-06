@@ -24,6 +24,7 @@ public class Bootstrap {
     public static final String MONITOR = "monitor-blocked";
     public static final String IO_SOCK = "io-socket";
     public static final String WALL = "wall";
+    public static final String CPU_TIME = "cpu-time";
 
     public static Map<String, EventType> eventTypeMap = new HashMap<String, EventType>() {{
         put(CPU, EventType.METHOD_PROFILING_SAMPLE);
@@ -33,6 +34,7 @@ public class Bootstrap {
         put(MONITOR, EventType.JAVA_MONITOR_BLOCKED);
         put(IO_SOCK, EventType.IO);
         put(WALL, EventType.THREAD_DUMP);
+        put(CPU_TIME, EventType.CPU_TIME_SAMPLE);
     }};
 
     public static void main(String[] args) throws IOException {
@@ -42,7 +44,7 @@ public class Bootstrap {
         options.addOption("h", "usage help");
         options.addOption(Option.builder("d").longOpt("decompress").type(String.class).desc("Decompress the JFR file").build());
         options.addOption(Option.builder("f").longOpt("jfrdump").argName("jfr file path").hasArg(true).desc("Java Flight Recorder Dump").required(true).build());
-        options.addOption(Option.builder("e").longOpt("event").argName("Type of event used to generate the flamegraph").hasArg(true).required(false).desc("[cpu, allocation-tlab, allocation-outside-tlab, exceptions, monitor-blocked, io-socket]").build());
+        options.addOption(Option.builder("e").longOpt("event").argName("Type of event used to generate the flamegraph").hasArg(true).required(false).desc("[cpu, cpu-time, allocation-tlab, allocation-outside-tlab, exceptions, monitor-blocked, io-socket]").build());
         CommandLine commandLine;
         try {
             File file = null;
